@@ -166,3 +166,49 @@ class EmployeeBook {
         return null;
     }
 }
+public class Main {
+    public static void main(String[] args) {
+        EmployeeBook book = new EmployeeBook();
+
+        // Добавляем сотрудников
+        String[] names = {"Иванов", "Петров", "Сидорова", "Козлов",
+                "Смирнов", "Федоров", "Николаева", "Павлов",
+                "Алексеев", "Морозов", "Лишний"}; // 11-й не добавится
+
+        System.out.println("Добавление:");
+        for (int i = 0; i < names.length; i++) {
+            int dept = (i % 5) + 1;
+            double salary = 50 + Math.random() * 400;
+            boolean added = book.add(new Employee(names[i], dept, salary));
+            System.out.println(names[i] + ": " + (added ? "добавлен" : "не добавлен"));
+        }
+
+        System.out.println("\n--- 1. Все сотрудники ---");
+        book.printAll();
+
+        System.out.println("\n--- 2. Средняя зарплата ---");
+        System.out.printf("Средняя: %.2f\n", book.averageSalary());
+
+        System.out.println("\n--- 3. Налоги PROPORTIONAL ---");
+        book.calculateTaxes("PROPORTIONAL");
+
+        System.out.println("\n--- 4. Индексация отдела 1 на 10% ---");
+        book.indexSalary(1, 10);
+
+        System.out.println("\n--- 5. Первый в отделе 2 с зарплатой > 200 ---");
+        book.findFirstInDept(2, 200);
+
+        System.out.println("\n--- 6. Первые 3 с зарплатой < 150 ---");
+        book.findWithLowerSalary(150, 3);
+
+        System.out.println("\n--- 7. Проверка наличия ---");
+        Employee test = new Employee("Тест", 1, 200);
+        System.out.println("Есть сотрудник с зарплатой 200: " + book.contains(test));
+
+        System.out.println("\n--- 8. Поиск по ID ---");
+        Employee found = book.getById(3);
+        if (found != null) {
+            System.out.println("Найден: " + found.getName());
+        }
+    }
+}
